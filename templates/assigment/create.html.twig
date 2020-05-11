@@ -1,0 +1,18 @@
+{% extends "base.html.twig" %}
+{% block body %}
+    {% for messege in app.flashes('failed') %}
+        <div class="alert alert-danger">
+            {{ messege }}
+        </div>
+    {% endfor %}
+
+    <div class="h2 pb-4 pt-1" style="text-align: center; font-weight:300;">Add new task</div>
+
+    <div class="container-fluid pt-3">
+        <div class="row justify-content-center">
+            <div class="col-lg-6 col-10">
+                {{ form(form) }}
+            </div>
+        </div>
+    </div>
+{% endblock %}

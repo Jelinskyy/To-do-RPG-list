@@ -1,0 +1,78 @@
+{% extends "base.html.twig" %}
+{% block body %}
+    <div class="container-fluid pt-3">
+        {% for messege in app.flashes('assig_deleted') %}
+        <div class="row alert alert-danger">
+            {{ messege }}
+        </div>
+        {% endfor %}
+
+        {% for messege in app.flashes('assig_created') %}
+        <div class="row alert alert-success">
+            {{ messege }}
+        </div>
+        {% endfor %}
+
+        <div class="row justify-content-center">
+            <form class="form-group" action="{{ path('list') }}" method="post">
+                <input class="form-control" type="submit" value="Skill's">
+            </form>
+        </div>
+
+        <div class="row justify-content-center">
+            <div class="col-lg-8 col-md-10 col-sm-12">
+                <table class="table" style="text-align: center;">
+                    <thead>
+                        <th scpoe="col">Id</th>
+                        <th scpoe="col">Name</th>
+                        <th scpoe="col">Description</th>
+                        <th scpoe="col">Skill</th>
+                        <th scpoe="col">Value</th>
+                        <th scpoe="col">Delete</th>
+                        <th scpoe="col">Complete</th>
+                    </thead>
+                    <tbody>
+                        {% for assigment in assigments %}
+
+                        <tr>
+                            <th scope="row">{{ assigment.id }}</th>
+                            <td>{{ assigment.title }}</td>
+                            <td>{{ assigment.description }}</td>
+
+                            <td>
+                            {% for task in assigment.forTask %}
+                                <p class="mb-0">{{ task.skill.name }}</p>
+                            {% endfor %}
+                            </td>
+
+                            <td>
+                            {% for task in assigment.forTask %}
+                                <p class="mb-0">{{ task.value }}</p>
+                            {% endfor %}
+                            </td>
+
+                            <td>
+                                <form class="form-group" action="{{ path('assigment_delete', { id:assigment.id }) }}" method="post">
+                                    <input type="hidden" name="_method" value="DELETE">
+                                    <div>
+                                        <button class="btn btn-danger" type="submit">delete</button>
+                                    </div>
+                                </form>
+                            </td>
+
+                            <td>
+                                <form class="form-group" action="{{ path('assigment_complete', { id:assigment.id }) }}" method="post">
+                                    <div>
+                                        <button class="btn btn-success" type="submit">complete</button>
+                                    </div>
+                                </form>
+                            </td>
+                        </tr>
+
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock %}

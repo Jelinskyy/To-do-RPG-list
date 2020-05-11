@@ -1,0 +1,57 @@
+{% extends "base.html.twig" %}
+{% block body %}
+    <div class="container-fluid pt-3">
+        {% for messege in app.flashes('skill_deleted') %}
+        <div class="row alert alert-danger">
+            {{ messege }}
+        </div>
+        {% endfor %}
+
+        {% for messege in app.flashes('skill_created') %}
+        <div class="row alert alert-success">
+            {{ messege }}
+        </div>
+        {% endfor %}
+
+        <div class="row justify-content-center">
+            <form class="form-group" action="{{ path('assigment_list') }}" method="post">
+                <input class="form-control" type="submit" value="Assigment's">
+            </form>
+        </div>
+
+        <div class="row justify-content-center">
+            <div class="col-8">
+                <table class="table" style="text-align: center;">
+                    <thead>
+                        <th scpoe="col">Id</th>
+                        <th scpoe="col">Name</th>
+                        <th scope="col">lvl</th>
+                        <th scope="col">exp</th>
+                        <th scpoe="col">Delete</th>
+                    </thead>
+                    <tbody>
+                        {% for skill in skills %}
+
+                        <tr>
+                            <th scope="row">{{ skill.id }}</th>
+                            <td>{{ skill.name }}</td>
+                            <td>{{ skill.level.level }}</td>
+                            <td>{{ skill.level.expirience }}/{{ levels[skill.level.level]}}</td>
+
+                            <td class="d-flex justify-content-center">
+                                    <form class="form-group" action="{{ path('skill_delete', { id:skill.id }) }}" method="post">
+                                        <input type="hidden" name="_method" value="DELETE">
+                                        <div>
+                                            <input class="form-control is-invalid" type="submit" value="delete">
+                                        </div>
+                                    </form>
+                            </td>
+                        </tr>
+
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock %}
